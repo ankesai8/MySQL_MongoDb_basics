@@ -1,0 +1,132 @@
+
+MYSQL BASICS
+
+
+Topics
+Database and DBMS (Relational and Non-Relational)
+MySQL Introduction
+Installation of MySQL and MySQL Workbench
+Data Types (Most commonly used)
+DDL - CREATE/ALTER/DROP
+DML - INSERT/UPDATE/DELETE/TRUNCATE
+DQL - SELECT
+
+References
+https://dev.mysql.com/downloads/
+
+MySQL :: MySQL Community Downloads
+https://dev.mysql.com/downloads/
+
+MYSQL.txt
+Text
+Class comments
+
+Database - It's a collection of data and  a place to store data
+
+DBMS (Database Management System) - To manage the database
+
+DBMS Types :
+    RDBMS - Relational DBMS
+    
+        -  There will be a relationship between the data
+        -  Stored as Tables with Rows and Columns
+        -  Uses SQL to communicate
+        -  Examples - MySQL, SQL Server, Oracle etc.,
+        
+    NRDBMS - Non-Relational DBMS or NoSQL
+    
+        -  No Relationship between data
+        -  BSON (Binary JSON)
+        -  Examples - MongoDB, Cassandra etc.,
+
+SQL - Structured Query Language
+
+SEQUEL - Structured English QUEry Language
+
+Installation :
+    MySQL Community Server
+    MySQL GUI Tools - MySQL Workbench, HeidiSQL etc.,
+
+Default User - root
+Default Port - 3306
+
+Data Types (Commonly Used) :
+    INTEGER(3) OR INT(3) => 1, 23, 343
+    VARCHAR(23) => Guvi, Test
+    FLOAT(3,4) OR DOUBLE() => 134.2287, 43.21, 131.23
+    BOOLEAN => TRUE, FALSE, 1, 0
+    DATE => 21/02/2001
+    DATETIME => 21/02/2001 12:00:24
+    ENUM => Male, Female, Other
+
+SQL Types :
+    DDL - Data Definition Language
+        CREATING DATABASE
+            CREATE DATABASE <name>;
+            => CREATE DATABASE guvi_posts;
+        
+        DROPPING DATABASE
+            DROP DATABASE <name>;
+            => DROP DATABASE guvi_posts;
+
+        CREATING TABLE
+            CREATE TABLE <name> (<col1> <col1DT>, <col2> <col2DT>);
+            => CREATE TABLE posts (id INTEGER, userId INTEGER, title VARCHAR(100), body VARCHAR(250));
+
+        ALTERING TABLE
+            CHANGE TABLE NAME
+                ALTER TABLE <oldName> RENAME TO <newName>;
+                => ALTER TABLE posts RENAME TO post;
+
+            CHANGE COLUMN NAME
+                ALTER TABLE <name> CHANGE <oldColName> <newColName> <DT>; 
+                => ALTER TABLE posts CHANGE userId user_id INTEGER;
+
+            CHANGE COLUMN DATA TYPE
+                ALTER TABLE <name> MODIFY <colName> <newDT>; 
+                => ALTER TABLE posts MODIFY user_id VARCHAR(10);
+
+            REMOVE COLUMN
+                ALTER TABLE <name> DROP COLUMN <colName>;
+                => ALTER TABLE posts DROP COLUMN user_id;
+
+            ADD NEW COLUMN TO EXISTING TABLE
+                ALTER TABLE <name> ADD COLUMN <colName> <colDT>;
+                => ALTER TABLE posts ADD COLUMN userId INTEGER;
+
+        DROPPING TABLE
+            DROP TABLE <name>;
+            => DROP TABLE posts;
+
+    DML - Data Manipulation Language
+        CREATING DATA
+            INSERT INTO <name> (<col1>, <col2>)) VALUES (<col1Val>, <col2Val>);
+            => INSERT INTO posts (id, userId, title, body) VALUES (1, 23, "Test Title", "Test Body");
+
+        UPDATING DATA
+            UPDATE <name> SET <col1> = <val1>, <col2> = <val2>;
+            => UPDATE posts SET title = "Guvi", body = "Zen Classes" ;
+
+        DELETING DATA
+            DELETE FROM <name>;
+            => DELETE FROM posts;
+
+        TRUNCATING DATA
+            TRUNCATE TABLE <name>;
+            => TRUNCATE TABLE posts;
+
+    DQL - Data Query Language
+        READING DATA
+            ALL COLUMNS
+                SELECT * FROM <name>;
+                => SELECT * FROM posts;
+
+            SPECIFIC COLUMNS
+                SELECT <col1>, <col2> FROM <name>;
+                => SELECT title, body FROM posts;
+
+            SPECIFIC COLUMNS WITH ALIAS
+                SELECT <col1> AS <col1Alias>, <col2> AS <col2Alias> FROM <name>;
+                => SELECT title AS PostTitle FROM posts;
+MYSQL.txt
+Displaying MYSQL.txt.
