@@ -1,0 +1,119 @@
+
+Topics
+NRDBMS or NoSQL
+MongoDB
+Installation of MongoDB and NoSQL Booster
+Database, Collection and Document
+Database Commands - use and dropDatabase
+Datatypes
+Collection Commands - createCollection and drop
+_id and ObjectId
+CREATE Operations - save, insert, insertOne and insertMany
+READ Operations - find and findOne
+UPDATE Operations - $set, save, update, updateOne, findOneAndUpdate and updateMany
+DELETE Operations - remove
+
+
+NRDBMS - Non-Relational DBMS or NoSQL
+    - No relationship and structure
+    - BSON (Binary JSON)
+    - Example - MongoDB, Cassandra etc.,
+
+Tables - Collections
+Columns - Fields
+Rows - Documents
+
+MongoDB Default Port - 27017
+
+INSTALLATION :
+    MongoDB
+    MongoDB Compass/NoSQL Booster
+
+DATA TYPES :
+    String
+    Double
+    Array
+    Object
+
+COMMANDS :
+    CREATING DATABASE
+        use <name>
+        => use guvi_posts
+
+    DROPPING DATABASE
+        db.dropDatabase()
+
+    CREATING COLLECTION
+        db.createCollection(<name>);
+        => db.createCollection("posts");
+
+    DROPPING COLLECTION
+        db.<collName>.drop();
+        => db.posts.drop();
+
+    OBJECT ID
+        12 Bytes String
+        4 Bytes - Current Timestamp
+        3 Bytes - Machine ID
+        2 Bytes - Process ID
+        3 Bytes - Random characters (Incremental)
+
+    INSERTING DATA
+        insertOne
+            db.<collName>.insertOne({ <data> })
+            => db.posts.insertOne({ title: "Test", body: "Guvi" })
+
+        insertMany
+            db.<collName>.insertMany([{ <data1> }, { <data2> }])
+            => db.posts.insertMany([{ title: "Test", body: "Guvi" }, { title: "Test 2", body: "Guvi 2" }])
+
+        insert
+            db.<collName>.insert({ <data> })
+            => db.posts.insert({ title: "Test", body: "Guvi" })
+
+            db.<collName>.insert([{ <data1> }, { <data2> }])
+            => db.posts.insert([{ title: "Test", body: "Guvi" }, { title: "Test 2", body: "Guvi 2" }])
+
+        save
+            db.<collName>.save({ <insertFields> });
+            db.posts.save({ title: "Guvi" });
+
+    READING DATA
+        findOne
+            db.<collName>.findOne({ <condFields> })
+            => db.posts.findOne({ title: "Guvi" })
+
+        find
+            db.<collName>.find({ <condFields> })
+            => db.posts.find({ title: "Guvi"  })
+
+    UPDATING DATA
+        updateOne
+            db.<collName>.updateOne({}, { $set: { <updationFields> } });
+            => db.posts.updateOne({}, { $set: { title: "Guvi" } });
+
+        updateMany
+            db.<collName>.updateMany({}, { $set: { <updationFields> } });
+            => db.posts.updateMany({}, { $set: { title: "Guvi" } });
+
+        update
+            db.<collName>.update({}, { $set: { <updationFields> } }); // updateOne
+            => db.posts.update({}, { $set: { title: "Guvi" } });
+
+            db.<collName>.update({}, { $set: { <updationFields> } }, { multi: true }); // updateMany
+            => db.posts.update({}, { $set: { title: "Guvi" } }, { multi: true });
+
+        findOneAndUpdate
+            db.<collName>.findOneAndUpdate({}, { $set: { <updationFields> } }); // Reterive Old Doc
+            => db.posts.findOneAndUpdate({}, { $set: { title: "Guvi" } });
+
+            db.<collName>.findOneAndUpdate({}, { $set: { <updationFields> } }, { returnNewDocument: true }); // Reterive New Doc
+            => db.posts.findOneAndUpdate({}, { $set: { title: "Guvi" } }, { returnNewDocument: true });
+
+        save
+            db.<collName>.save({ _id: ObjectId(<id>), <updationFields> });
+            db.posts.save({ _id: ObjectId("asdcvfsdafsv"), title: "Guvi", body: "Test" }); // Replace entire doc
+
+    DELETING DATA
+        db.<collName>.remove({});
+        => db.posts.remove({});
