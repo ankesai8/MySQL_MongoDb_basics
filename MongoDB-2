@@ -1,0 +1,96 @@
+Topics
+Conditions - $lt, $gt, $lte, $gte, $ne, $in, $nin, $and, $or and $not
+Projection
+Clause - limit, skip, sort, count and  distinct
+Aggregation - $sum, $avg, $min, $max, $group, $match, $project, $limit, $skip, $sort and $lookup
+
+
+CONDITIONS :
+
+    db.<collName>.find({ <col>: <val> });
+    => db.posts.find({ userId: 10 }); // Equal To
+
+    db.<collName>.find({ <col>: { $ne: <val> } });
+    => db.posts.find({ userId: { $ne: 10 }}); // Not Equal To
+
+    db.<collName>.find({ <col>: { $gt: <val> } });
+    => db.posts.find({ userId: { $gt: 10 }}); // Greater Than
+
+    db.<collName>.find({ <col>: { $gte: <val> } });
+    => db.posts.find({ userId: { $gte: 10 }}); // Greater Than Equal To
+
+    db.<collName>.find({ <col>: { $lt: <val> } });
+    => db.posts.find({ userId: { $lt: 10 }}); // Lesser Than
+
+    db.<collName>.find({ <col>: { $lte: <val> } });
+    => db.posts.find({ userId: { $lte: 10 }}); // Lesser Than Equal To
+
+    db.<collName>.find({ <col>: { $in: [<val1>, <val2>] } });
+    => db.posts.find({ id: { $in: [10, 11] } }); // Multiple Values
+
+    db.<collName>.find({ <col>: { $nin: [<val1>, <val2>] } });
+    => db.posts.find({ id: { $nin: [10, 11] } }); // Not Multiple Values
+
+    db.<collName>.find({ <col>: { $not: { <cond> } } });
+    => db.posts.find({ id: { $not: { $gt: 10 } } }); // Not
+
+    db.<collName>.find({ $and: [{ <col1>: <val1> }, { <col2>: <val2> }] });
+    => db.posts.find({ $and: [ { id: { $gt: 10 } }, { userId: { $gt: 9 } }  ] })   // AND
+
+    db.<collName>.find({ $or: [{ <col1>: <val1> }, { <col2>: <val2> }] });
+    => db.posts.find({ $or: [ { id: { $gt: 10 } }, { userId: { $gt: 9 } }  ] })   // OR
+
+PROJECTION :
+    db.<collName>.find({}, { <col>: 1 }); 
+    => db.posts.find({}, { title: 1 });  // Get all titles along with _id
+
+    db.<collName>.find({}, { _id: 0, <col>: 1 });
+    => db.posts.find({}, { _id: 0, title: 1 });  // Get all titles
+
+CLAUSE :
+    LIMIT
+        db.<collName>.find().limit(<val>);
+        => db.posts.find().limit(5); // Get 5 records
+
+    SKIP
+        db.<collName>.find().skip(<skipVal>).limit(<val>);
+        => db.posts.find().skip(2).limit(5); // Skip 2 records and Get 5 records
+
+    SORT
+        db.<collName>.find().sort({ <col>: <1 or -1> })
+        => db.posts.find().sort({ userId: -1, id: 1 }); // userId DESC, id ASC
+
+    COUNT
+        db.<collName>.count({ <cond> })
+        => db.posts.count() // Count all records
+        => db.posts.count({ userID: 1 }) // Count all records with userID 1
+
+    DISTINCT
+        db.<collName>.distinct(<col>);
+        => db.posts.distinct("userId");  // Distinct userId
+
+
+AGGREGATION :
+    $sum, $avg, $min, $max
+
+    db.posts.aggregate([
+        { $group: { _id: "$userId", countOfPosts: { $sum : 1 } } },
+        { $match: { _id: { $gte: 5 } } },
+        { $project: { _id: 0, userId: "$_id", countOfPosts: 1  } },
+        { $sort: { userId: -1 } },
+        { $skip: 2 },
+        { $limit: 3 }
+    ]);
+    
+    $lookup
+
+    db.posts.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "id",
+                as: "userInfo"
+            }
+        }
+    ]
